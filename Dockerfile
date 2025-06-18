@@ -16,7 +16,7 @@ ENV SHELL=/bin/bash
 WORKDIR /
 
 # Create workspace directory
-RUN mkdir /workspace
+# RUN mkdir /workspace
 
 # Update, upgrade, install packages, install python if PYTHON_VERSION is specified, clean up
 RUN apt-get update --yes && \
