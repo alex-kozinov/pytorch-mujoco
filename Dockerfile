@@ -47,7 +47,7 @@ ENV LD_LIBRARY_PATH="/usr/local/lib/python3.10/dist-packages/torch/lib:\
 
 WORKDIR /root/.mujoco
 RUN wget https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz
-RUN tar -xvzf mujoco210-linux-x86_64.tar.gz
+RUN tar --no-same-owner -xvzf mujoco210-linux-x86_64.tar.gz
 
 
 RUN pip install swig==4.2.1
