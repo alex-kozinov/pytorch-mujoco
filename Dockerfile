@@ -57,7 +57,8 @@ COPY proxy/readme.html /usr/share/nginx/html/readme.html
 COPY README.md /usr/share/nginx/html/README.md
 
 # Start Scripts
-COPY --chmod=755 scripts/start.sh /start.sh
+COPY scripts/start.sh /start.sh
+RUN chmod 755 /start.sh
 
 
 ENV LD_LIBRARY_PATH="/usr/local/lib/python3.10/dist-packages/torch/lib:\
