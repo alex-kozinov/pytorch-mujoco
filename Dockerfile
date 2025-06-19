@@ -38,6 +38,8 @@ RUN apt-get install libosmesa6-dev --yes
 RUN apt-get install libegl1 libglvnd0 --yes
 RUN apt-get install -y ffmpeg
 
+RUN pip install --upgrade pip
+RUN pip install brax
 RUN pip install --upgrade --no-cache-dir jupyterlab ipywidgets jupyter-archive 
 RUN pip install swig==4.2.1
 RUN pip install "gymnasium[all]==0.29.1"
@@ -45,7 +47,6 @@ RUN pip install "mujoco-py==2.1.2.14"
 RUN pip install "cython<3"
 RUN pip install opencv-python==4.8.0.74
 RUN pip install mujoco_mjx
-RUN pip install brax
 RUN pip install -q mediapy
 
 # Set up Jupyter Notebook
@@ -84,6 +85,7 @@ RUN ls -lR /root/.mujoco/mujoco210
 
 # Installation check
 RUN python -c "import gymnasium as gym; gym.make('Ant-v4')"
+RUN python -c "from flax import struct"
 
 # Welcome Message
 RUN echo 'cat /etc/runpod.txt' >> /root/.bashrc
