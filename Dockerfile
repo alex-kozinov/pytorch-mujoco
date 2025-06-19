@@ -21,21 +21,21 @@ WORKDIR /
 RUN dpkg -S blinker || true
 
 # Update, upgrade, install packages, install python if PYTHON_VERSION is specified, clean up
-RUN apt-get update --yes && \
-    apt-get upgrade --yes && \
-    apt install --yes --no-install-recommends git wget curl bash libgl1 software-properties-common openssh-server nginx && \
-    apt-get autoremove -y && \
+RUN apt-get -qq update --yes && \
+    apt-get -qq upgrade --yes && \
+    apt -qq install --yes --no-install-recommends git wget curl bash libgl1 software-properties-common openssh-server nginx && \
+    apt-get -qq autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
 # DEBUG
-RUN dpkg -S blinker 2>/dev/null
+RUN dpkg -S blinker || true
 
-RUN apt-get update
-RUN apt-get install build-essential --yes
+RUN apt-get -qq update
+RUN apt-get -qq install build-essential --yes
 # DEBUG
-RUN dpkg -S blinker 2>/dev/null
+RUN dpkg -S blinker || true
 RUN apt-get install libosmesa6-dev --yes
 # DEBUG
 RUN dpkg -S blinker 2>/dev/null
