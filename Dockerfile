@@ -18,7 +18,7 @@ WORKDIR /
 # Create workspace directory
 # RUN mkdir /workspace
 # DEBUG
-RUN dpkg -S blinker 2>/dev/null
+RUN dpkg -S blinker
 
 # Update, upgrade, install packages, install python if PYTHON_VERSION is specified, clean up
 RUN apt-get update --yes && \
