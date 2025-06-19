@@ -22,10 +22,6 @@ WORKDIR /
 RUN apt-get update --yes && \
     apt-get upgrade --yes && \
     apt install --yes --no-install-recommends git wget curl bash libgl1 software-properties-common openssh-server nginx && \
-    if [ -n "${PYTHON_VERSION}" ]; then \
-    add-apt-repository ppa:deadsnakes/ppa && \
-    apt install "python${PYTHON_VERSION}-dev" "python${PYTHON_VERSION}-venv" -y --no-install-recommends; \
-    fi && \
     apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
@@ -33,21 +29,20 @@ RUN apt-get update --yes && \
 
 RUN apt-get update
 RUN apt-get install build-essential --yes
-RUN apt-get install python3.10-dev --yes
 RUN apt-get install libosmesa6-dev --yes
 RUN apt-get install libegl1 libglvnd0 --yes
 RUN apt-get install -y ffmpeg
 
-RUN pip install --upgrade pip
-RUN pip install brax
-RUN pip install --upgrade --no-cache-dir jupyterlab ipywidgets jupyter-archive 
-RUN pip install swig==4.2.1
-RUN pip install "gymnasium[all]==0.29.1"
-RUN pip install "mujoco-py==2.1.2.14"
-RUN pip install "cython<3"
-RUN pip install opencv-python==4.8.0.74
-RUN pip install mujoco_mjx
-RUN pip install -q mediapy
+RUN python -m pip install --upgrade pip
+RUN python -m pip install brax
+RUN python -m pip install --upgrade --no-cache-dir jupyterlab ipywidgets jupyter-archive 
+RUN python -m pip install swig==4.2.1
+RUN python -m pip install "gymnasium[all]==0.29.1"
+RUN python -m pip install "mujoco-py==2.1.2.14"
+RUN python -m pip install "cython<3"
+RUN python -m pip install opencv-python==4.8.0.74
+RUN python -m pip install mujoco_mjx
+RUN python -m pip install -q mediapy
 
 # Set up Jupyter Notebook
 RUN pip install notebook==7.3.3
