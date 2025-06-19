@@ -23,7 +23,7 @@ RUN dpkg -S blinker || true
 # Update, upgrade, install packages, install python if PYTHON_VERSION is specified, clean up
 RUN apt-get -qq update --yes && \
     apt-get -qq upgrade --yes && \
-    apt -qq install --yes --no-install-recommends git wget curl bash libgl1 software-properties-common openssh-server nginx && \
+    apt -qq install --yes --no-install-recommends git wget curl bash libgl1 openssh-server nginx && \
     apt-get -qq autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
