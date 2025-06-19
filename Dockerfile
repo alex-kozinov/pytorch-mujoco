@@ -42,7 +42,6 @@ RUN pip install "gymnasium[all]==0.29.1"
 RUN pip install "mujoco-py==2.1.2.14"
 RUN pip install "cython<3"
 RUN pip install opencv-python==4.8.0.74
-RUN python -c "import gymnasium as gym; gym.make('Ant-v4')"
 
 # Set up Jupyter Notebook
 RUN pip install notebook==7.3.3
@@ -76,6 +75,9 @@ RUN wget https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz && \
     rm -rf /root/.mujoco/mujoco210/sample /root/.mujoco/mujoco210/model/sponge.png
 
 RUN ls -lR /root/.mujoco/mujoco210
+
+# Installation check
+RUN python -c "import gymnasium as gym; gym.make('Ant-v4')"
 
 # Welcome Message
 RUN echo 'cat /etc/runpod.txt' >> /root/.bashrc
