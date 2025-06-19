@@ -12,9 +12,6 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
 ENV SHELL=/bin/bash
 
-# Set the working directory
-WORKDIR /
-
 # Update, upgrade, install packages, install python if PYTHON_VERSION is specified, clean up
 RUN apt-get -qq update --yes && \
     apt-get -qq upgrade --yes && \
@@ -30,20 +27,6 @@ RUN apt-get install libosmesa6-dev --yes
 RUN apt-get install libegl1 libglvnd0 --yes
 RUN apt-get install -y ffmpeg
 
-RUN python -m pip install --upgrade pip
-RUN python -m pip install brax
-RUN python -m pip install --upgrade --no-cache-dir jupyterlab ipywidgets jupyter-archive 
-RUN python -m pip install swig==4.2.1
-RUN python -m pip install "gymnasium[all]==0.29.1"
-RUN python -m pip install "mujoco-py==2.1.2.14"
-RUN python -m pip install "cython<3"
-RUN python -m pip install opencv-python==4.8.0.74
-RUN python -m pip install mujoco_mjx
-RUN python -m pip install -q mediapy
-
-# Set up Jupyter Notebook
-RUN pip install notebook==7.3.3
-
 # Remove existing SSH host keys
 RUN rm -f /etc/ssh/ssh_host_*
 
@@ -58,26 +41,29 @@ COPY README.md /usr/share/nginx/html/README.md
 COPY scripts/start.sh /start.sh
 RUN chmod 755 /start.sh
 
-
 ENV LD_LIBRARY_PATH="/usr/local/lib/python3.10/dist-packages/torch/lib:\
 /usr/local/lib/python3.10/dist-packages/torch_tensorrt/lib:\
 /usr/local/cuda/compat/lib:\
 /usr/local/nvidia/lib:\
 /usr/local/nvidia/lib64:\
 /root/.mujoco/mujoco210/bin"
-# To run Mujoco, its path must be included into '$LD_LIBRARY_PATH'.
 
+# Set the working directory
+WORKDIR /
+
+RUN python -m pip install --upgrade pip
+RUN python -m pip install --upgrade --no-cache-dir jupyterlab ipywidgets jupyter-archive 
+
+# To run Mujoco, its path must be included into '$LD_LIBRARY_PATH'.
 WORKDIR /root/.mujoco
 
 RUN wget https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz && \
     tar --no-same-owner -xvzf mujoco210-linux-x86_64.tar.gz && \
     rm -rf /root/.mujoco/mujoco210/sample /root/.mujoco/mujoco210/model/sponge.png
 
-RUN ls -lR /root/.mujoco/mujoco210
-
 # Installation check
-RUN python -c "import gymnasium as gym; gym.make('Ant-v4')"
-RUN python -c "from flax import struct"
+# RUN python -c "import gymnasium as gym; gym.make('Ant-v4')"
+# RUN python -c "from flax import struct"
 
 # Welcome Message
 RUN echo 'cat /etc/runpod.txt' >> /root/.bashrc
