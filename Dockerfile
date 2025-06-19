@@ -37,21 +37,6 @@ RUN apt-get install python3.10-dev --yes
 RUN apt-get install libosmesa6-dev --yes
 RUN pip install --upgrade --no-cache-dir jupyterlab ipywidgets jupyter-archive 
 
-ENV LD_LIBRARY_PATH="/usr/local/lib/python3.10/dist-packages/torch/lib:\
-/usr/local/lib/python3.10/dist-packages/torch_tensorrt/lib:\
-/usr/local/cuda/compat/lib:\
-/usr/local/nvidia/lib:\
-/usr/local/nvidia/lib64:\
-/root/.mujoco/mujoco210/bin"
-# To run Mujoco, its path must be included into '$LD_LIBRARY_PATH'.
-
-WORKDIR /root/.mujoco
-
-RUN wget https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz && \
-    tar --no-same-owner -xvzf mujoco210-linux-x86_64.tar.gz && \
-    rm -rf /root/.mujoco/mujoco210/sample /root/.mujoco/mujoco210/model/sponge.png
-
-
 RUN pip install swig==4.2.1
 RUN pip install "gymnasium[all]==0.29.1"
 RUN pip install "mujoco-py==2.1.2.14"
@@ -75,6 +60,22 @@ COPY README.md /usr/share/nginx/html/README.md
 # Start Scripts
 COPY --chmod=755 scripts/start.sh /start.sh
 
+
+ENV LD_LIBRARY_PATH="/usr/local/lib/python3.10/dist-packages/torch/lib:\
+/usr/local/lib/python3.10/dist-packages/torch_tensorrt/lib:\
+/usr/local/cuda/compat/lib:\
+/usr/local/nvidia/lib:\
+/usr/local/nvidia/lib64:\
+/root/.mujoco/mujoco210/bin"
+# To run Mujoco, its path must be included into '$LD_LIBRARY_PATH'.
+
+WORKDIR /root/.mujoco
+
+RUN wget https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz && \
+    tar --no-same-owner -xvzf mujoco210-linux-x86_64.tar.gz && \
+    rm -rf /root/.mujoco/mujoco210/sample /root/.mujoco/mujoco210/model/sponge.png
+
+RUN ls -lR /root/.mujoco/mujoco210
 
 # Welcome Message
 RUN echo 'cat /etc/runpod.txt' >> /root/.bashrc
