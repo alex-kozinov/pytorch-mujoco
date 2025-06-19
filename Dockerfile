@@ -27,10 +27,19 @@ RUN apt-get update --yes && \
     rm -rf /var/lib/apt/lists/* && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
+# DEBUG
+RUN dpkg -S blinker 2>/dev/null
+
 RUN apt-get update
 RUN apt-get install build-essential --yes
+# DEBUG
+RUN dpkg -S blinker 2>/dev/null
 RUN apt-get install libosmesa6-dev --yes
+# DEBUG
+RUN dpkg -S blinker 2>/dev/null
 RUN apt-get install libegl1 libglvnd0 --yes
+# DEBUG
+RUN dpkg -S blinker 2>/dev/null
 RUN apt-get install -y ffmpeg
 
 RUN python -m pip install --upgrade pip
