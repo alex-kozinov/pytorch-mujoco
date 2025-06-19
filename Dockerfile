@@ -35,6 +35,7 @@ RUN apt-get update
 RUN apt-get install build-essential --yes
 RUN apt-get install python3.10-dev --yes
 RUN apt-get install libosmesa6-dev --yes
+RUN apt-get install libegl1 libglvnd0 --yes
 RUN pip install --upgrade --no-cache-dir jupyterlab ipywidgets jupyter-archive 
 
 RUN pip install swig==4.2.1
