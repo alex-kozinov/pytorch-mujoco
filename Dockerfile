@@ -12,13 +12,11 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
 ENV SHELL=/bin/bash
 
+# Create workspace directory
+RUN mkdir /workspace
+
 # Set the working directory
 WORKDIR /
-
-# Create workspace directory
-# RUN mkdir /workspace
-# DEBUG
-RUN dpkg -S blinker || true
 
 # Update, upgrade, install packages, install python if PYTHON_VERSION is specified, clean up
 RUN apt-get -qq update --yes && \
@@ -29,25 +27,10 @@ RUN apt-get -qq update --yes && \
     rm -rf /var/lib/apt/lists/* && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
-# DEBUG
-RUN echo "--- Проверка наличия blinker ---" && \
-    apt list --installed | grep blinker || echo "blinker not found in installed list" && \
-    echo "--- Кто зависит от blinker ---" && \
-    apt-cache rdepends python3-blinker || echo "rdepends failed" && \
-    echo "--- Где физически лежит blinker ---" && \
-    python3 -c "import blinker; print(blinker.__file__)" || echo "not importable"
-
-
 RUN apt-get -qq update
 RUN apt-get -qq install build-essential --yes
-# DEBUG
-RUN dpkg -S blinker || true
 RUN apt-get install libosmesa6-dev --yes
-# DEBUG
-RUN dpkg -S blinker 2>/dev/null
 RUN apt-get install libegl1 libglvnd0 --yes
-# DEBUG
-RUN dpkg -S blinker 2>/dev/null
 RUN apt-get install -y ffmpeg
 
 RUN python -m pip install --upgrade pip
