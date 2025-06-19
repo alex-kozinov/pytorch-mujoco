@@ -6,9 +6,6 @@
 # Feel free to change the image below to your prefer base image. 🙃
 FROM nvcr.io/nvidia/pytorch:25.05-py3 
 
-# DEBUG
-RUN dpkg -S blinker 2>/dev/null
-
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Set environment variables
