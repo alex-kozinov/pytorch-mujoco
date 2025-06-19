@@ -30,7 +30,13 @@ RUN apt-get -qq update --yes && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
 # DEBUG
-RUN dpkg -S blinker || true
+RUN echo "--- Проверка наличия blinker ---" && \
+    apt list --installed | grep blinker || echo "blinker not found in installed list" && \
+    echo "--- Кто зависит от blinker ---" && \
+    apt-cache rdepends python3-blinker || echo "rdepends failed" && \
+    echo "--- Где физически лежит blinker ---" && \
+    python3 -c "import blinker; print(blinker.__file__)" || echo "not importable"
+
 
 RUN apt-get -qq update
 RUN apt-get -qq install build-essential --yes
