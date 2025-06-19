@@ -46,9 +46,11 @@ ENV LD_LIBRARY_PATH="/usr/local/lib/python3.10/dist-packages/torch/lib:\
 # To run Mujoco, its path must be included into '$LD_LIBRARY_PATH'.
 
 WORKDIR /root/.mujoco
-RUN wget https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz
-RUN tar --no-same-owner -xvzf mujoco210-linux-x86_64.tar.gz
-RUN rm -rf mujoco210/sample mujoco210/model/sponge.png
+
+RUN wget https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz && \
+    tar --no-same-owner -xvzf mujoco210-linux-x86_64.tar.gz && \
+    rm -rf /root/.mujoco/mujoco210/sample /root/.mujoco/mujoco210/model/sponge.png
+
 
 RUN pip install swig==4.2.1
 RUN pip install "gymnasium[all]==0.29.1"
