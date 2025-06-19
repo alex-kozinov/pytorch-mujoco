@@ -6,6 +6,9 @@
 # Feel free to change the image below to your prefer base image. 🙃
 FROM nvcr.io/nvidia/pytorch:25.05-py3 
 
+# DEBUG
+RUN dpkg -S blinker 2>/dev/null
+
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Set environment variables
@@ -17,6 +20,8 @@ WORKDIR /
 
 # Create workspace directory
 # RUN mkdir /workspace
+# DEBUG
+RUN dpkg -S blinker 2>/dev/null
 
 # Update, upgrade, install packages, install python if PYTHON_VERSION is specified, clean up
 RUN apt-get update --yes && \
