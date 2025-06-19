@@ -36,13 +36,17 @@ RUN apt-get install build-essential --yes
 RUN apt-get install python3.10-dev --yes
 RUN apt-get install libosmesa6-dev --yes
 RUN apt-get install libegl1 libglvnd0 --yes
-RUN pip install --upgrade --no-cache-dir jupyterlab ipywidgets jupyter-archive 
+RUN apt-get install -y ffmpeg
 
+RUN pip install --upgrade --no-cache-dir jupyterlab ipywidgets jupyter-archive 
 RUN pip install swig==4.2.1
 RUN pip install "gymnasium[all]==0.29.1"
 RUN pip install "mujoco-py==2.1.2.14"
 RUN pip install "cython<3"
 RUN pip install opencv-python==4.8.0.74
+RUN pip install mujoco_mjx
+RUN pip install brax
+RUN pip install -q mediapy
 
 # Set up Jupyter Notebook
 RUN pip install notebook==7.3.3
