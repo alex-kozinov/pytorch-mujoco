@@ -4,8 +4,7 @@
 # 3. https://github.com/facebookresearch/nougat/issues/40#issuecomment-1713702899
 
 # Feel free to change the image below to your prefer base image. 🙃
-FROM nvcr.io/nvidia/pytorch:25.05-py3 
-
+FROM nvcr.io/nvidia/pytorch:24.04-py3 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Set environment variables
