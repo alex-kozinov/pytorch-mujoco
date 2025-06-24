@@ -11,6 +11,15 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
 ENV SHELL=/bin/bash
 
+# Update, upgrade, install packages, install python if PYTHON_VERSION is specified, clean up
+RUN apt-get -qq update --yes && \
+    apt-get -qq upgrade --yes && \
+    apt -qq install --yes --no-install-recommends git wget curl bash libgl1 openssh-server nginx && \
+    apt-get -qq autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+
 RUN rm -f /etc/ssh/ssh_host_*
 
 # NGINX Proxy
